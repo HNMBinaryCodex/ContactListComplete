@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -15,7 +16,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+// Only to be used when Core Data gives an error due to session mismatch
+        
+//        let helper = CoreDataHelper()
+//        
+//        do {
+//            try helper.stack.dropAllData()
+//        } catch _ {
+//            print("could not flush database")
+//        }
+        
         return true
     }
 
