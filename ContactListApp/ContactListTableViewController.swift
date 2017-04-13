@@ -23,6 +23,8 @@ class ContactListTableViewController: UITableViewController {
         fetchAllContacts()
     }
     
+    //Function to fetch all the contacts stored in the database
+    
     func fetchAllContacts() {
         
         let helper = CoreDataHelper()
@@ -49,25 +51,21 @@ class ContactListTableViewController: UITableViewController {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! ContactTableViewCell
         
-        print("contact at index", indexPath.row, allContacts[indexPath.row].firstName!)
+        //Cell configuration
         
-        if allContacts.count > 0 {
-            
-            cell.firstName.text = allContacts[indexPath.row].firstName!
-            cell.lastName.text = allContacts[indexPath.row].lastName
-            cell.contactNumber.text = String(allContacts[indexPath.row].contactNumber)
-            cell.emailAddress.text = allContacts[indexPath.row].emailId
-        }
+        cell.name.text = "\(allContacts[indexPath.row].firstName!) \(allContacts[indexPath.row].lastName!)"
+        cell.contactNumber.text = String(allContacts[indexPath.row].contactNumber)
+        cell.emailAddress.text = allContacts[indexPath.row].emailId
         
         return cell
     }
 
 }
 
+//Custom Cell Class
 class ContactTableViewCell: UITableViewCell {
     
-    @IBOutlet weak var firstName: UILabel!
-    @IBOutlet weak var lastName: UILabel!
+    @IBOutlet weak var name: UILabel!
     @IBOutlet weak var contactNumber: UILabel!
     @IBOutlet weak var emailAddress: UILabel!
     

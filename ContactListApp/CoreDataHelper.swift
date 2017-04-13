@@ -11,6 +11,7 @@ import CoreData
 
 class CoreDataHelper {
     
+    //Connecting the database
     let stack = CoreDataStack(modelName: "ContactModel")!
     var context:NSManagedObjectContext
     

@@ -16,6 +16,8 @@ class AddNewContactViewController: UIViewController {
     @IBOutlet weak var lastNameTF: UITextField!
     @IBOutlet weak var firstNameTF: UITextField!
     
+    var negativeHeight: CGFloat = 0
+    
     @IBAction func saveContact(_ sender: UIBarButtonItem) {
         
         let helper = CoreDataHelper()
@@ -53,7 +55,46 @@ extension AddNewContactViewController: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
+        keyboardWillHideField(height: negativeHeight)
+        negativeHeight = 0
         textField.resignFirstResponder()
         return true
+    }
+    
+    func keyboardWillShowField(height: CGFloat) {
+        
+        if self.view.tag == 0 {
+            
+            self.view.frame.origin.y -= height
+            self.view.tag = 1
+        }
+    }
+    
+    func keyboardWillHideField(height: CGFloat) {
+        
+        if self.view.tag == 1 {
+            
+            self.view.frame.origin.y += height
+            self.view.tag = 0
+        }
+    }
+
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        
+        if textField.tag == 3 {
+            
+            if negativeHeight < 20 {
+                
+                negativeHeight = 20
+            }
+            
+            keyboardWillShowField(height: 20)
+        }
+        else if textField.tag == 4 {
+            
+            negativeHeight = 120
+            keyboardWillShowField(height: 120)
+        }
     }
 }

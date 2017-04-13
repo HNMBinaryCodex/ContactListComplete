@@ -18,13 +18,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 // Only to be used when Core Data gives an error due to session mismatch
         
-//        let helper = CoreDataHelper()
-//        
-//        do {
-//            try helper.stack.dropAllData()
-//        } catch _ {
-//            print("could not flush database")
-//        }
+        let helper = CoreDataHelper()
+        
+        do {
+            try helper.stack.dropAllData()
+        } catch _ {
+            print("could not flush database")
+        }
         
         return true
     }
