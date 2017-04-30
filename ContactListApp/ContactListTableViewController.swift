@@ -13,6 +13,9 @@ class ContactListTableViewController: UITableViewController {
 
     var allContacts: [Contact] = []
     
+    let helper = CoreDataHelper()
+    var selectedContact = Contact()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -26,8 +29,6 @@ class ContactListTableViewController: UITableViewController {
     //Function to fetch all the contacts stored in the database
     
     func fetchAllContacts() {
-        
-        let helper = CoreDataHelper()
         
         let fr = NSFetchRequest<NSFetchRequestResult>(entityName: "Contact")
         allContacts = try! helper.context.fetch(fr) as! [Contact]
@@ -58,6 +59,31 @@ class ContactListTableViewController: UITableViewController {
         cell.emailAddress.text = allContacts[indexPath.row].emailId
         
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Contact")
+        let predicate = NSPredicate(format: "firstName = %d", argumentArray: [allContacts[indexPath.row].firstName!])
+        fetchRequest.predicate = predicate
+        
+        do {
+            let contacts = try helper.context.fetch(fetchRequest) as! [Contact]
+            selectedContact = contacts.first!
+            performSegue(withIdentifier: "gotoSingleContact", sender: nil)
+        } catch {
+            
+            print("No contacts found")
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == "gotoSingleContact" {
+            
+            let nextVC = segue.destination as! DisplaySingleContactViewController
+            nextVC.selectedContact = selectedContact
+        }
     }
 
 }

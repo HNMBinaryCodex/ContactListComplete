@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BB9B039D1EB60EC100265D33 /* DisplaySingleContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB9B039C1EB60EC100265D33 /* DisplaySingleContactViewController.swift */; };
 		BBAACC9C1E9F61B8005E666F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBAACC9B1E9F61B8005E666F /* AppDelegate.swift */; };
 		BBAACCA11E9F61B8005E666F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BBAACC9F1E9F61B8005E666F /* Main.storyboard */; };
 		BBAACCA31E9F61B8005E666F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BBAACCA21E9F61B8005E666F /* Assets.xcassets */; };
@@ -40,6 +41,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		BB9B039C1EB60EC100265D33 /* DisplaySingleContactViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisplaySingleContactViewController.swift; sourceTree = "<group>"; };
 		BBAACC981E9F61B8005E666F /* ContactListApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ContactListApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBAACC9B1E9F61B8005E666F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BBAACCA01E9F61B8005E666F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -116,6 +118,7 @@
 				BBAACCDB1E9F836E005E666F /* CoreDataHelper.swift */,
 				BBAACCDD1E9F83A4005E666F /* CoreDataStack.swift */,
 				BBAACC9F1E9F61B8005E666F /* Main.storyboard */,
+				BB9B039C1EB60EC100265D33 /* DisplaySingleContactViewController.swift */,
 				BBAACCA21E9F61B8005E666F /* Assets.xcassets */,
 				BBAACCA41E9F61B8005E666F /* LaunchScreen.storyboard */,
 				BBAACCA71E9F61B8005E666F /* Info.plist */,
@@ -282,6 +285,7 @@
 			files = (
 				BBAACCDA1E9F81AE005E666F /* AddNewContactViewController.swift in Sources */,
 				BBAACCD61E9F7053005E666F /* Contact+CoreDataProperties.swift in Sources */,
+				BB9B039D1EB60EC100265D33 /* DisplaySingleContactViewController.swift in Sources */,
 				BBAACCD21E9F6D10005E666F /* ContactModel.xcdatamodeld in Sources */,
 				BBAACCDC1E9F836E005E666F /* CoreDataHelper.swift in Sources */,
 				BBAACCD51E9F7053005E666F /* Contact+CoreDataClass.swift in Sources */,

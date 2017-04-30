@@ -17,6 +17,7 @@ class AddNewContactViewController: UIViewController {
     @IBOutlet weak var firstNameTF: UITextField!
     
     var negativeHeight: CGFloat = 0
+    var contactToDisplay = Contact()
     
     @IBAction func saveContact(_ sender: UIBarButtonItem) {
         
