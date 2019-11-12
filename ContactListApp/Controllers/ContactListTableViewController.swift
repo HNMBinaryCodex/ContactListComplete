@@ -65,12 +65,14 @@ class ContactListTableViewController: UITableViewController {
         
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Contact")
         if let contactFirstName = allContacts[indexPath.row].firstName {
-            let predicate = NSPredicate(format: "firstName = %d", argumentArray: [contactFirstName])
+            let predicate = NSPredicate(format: "firstName = %d",
+                                        argumentArray: [contactFirstName])
             fetchRequest.predicate = predicate
         }
         
         do {
-            if let contacts = try helper.context.fetch(fetchRequest) as? [Contact], let selectedContact = contacts.first {
+            if let contacts = try helper.context.fetch(fetchRequest) as? [Contact],
+                let selectedContact = contacts.first {
                 performSegue(withIdentifier: "gotoSingleContact", sender: selectedContact)
             }
         } catch {
@@ -80,7 +82,8 @@ class ContactListTableViewController: UITableViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "gotoSingleContact" {
-            if let nextVC = segue.destination as? DisplaySingleContactViewController, let selectedContact = sender as? Contact {
+            if let nextVC = segue.destination as? DisplaySingleContactViewController,
+                let selectedContact = sender as? Contact {
                 nextVC.selectedContact = selectedContact
             }
         }
