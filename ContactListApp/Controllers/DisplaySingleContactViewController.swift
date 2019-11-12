@@ -25,6 +25,6 @@ class DisplaySingleContactViewController: UIViewController {
         contactNumber.text = "\(selectedContact.contactNumber)"
         email.text = selectedContact.emailId
         
-        title = "\(selectedContact.firstName) \(selectedContact.lastName)'s Contact Details"
+        title = "\(selectedContact.firstName ?? "") \(selectedContact.lastName ?? "")'s Contact Details"
     }
 }

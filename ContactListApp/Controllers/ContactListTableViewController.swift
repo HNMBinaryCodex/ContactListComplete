@@ -14,7 +14,6 @@ class ContactListTableViewController: UITableViewController {
     var allContacts: [Contact] = []
     
     let helper = CoreDataHelper()
-    var selectedContact = Contact()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,17 +21,21 @@ class ContactListTableViewController: UITableViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        
         fetchAllContacts()
     }
     
     //Function to fetch all the contacts stored in the database
     
     func fetchAllContacts() {
-        
         let fr = NSFetchRequest<NSFetchRequestResult>(entityName: "Contact")
-        allContacts = try! helper.context.fetch(fr) as! [Contact]
-        tableView.reloadData()
+        do {
+            if let contactList = try helper.context.fetch(fr) as? [Contact] {
+                allContacts = contactList
+                tableView.reloadData()
+            }
+        } catch {
+            print("Could not read conatct fetcher")
+        }
     }
 
     // MARK: - Table view data source
@@ -50,39 +53,36 @@ class ContactListTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! ContactTableViewCell
-        
-        //Cell configuration
-        
-        cell.name.text = "\(allContacts[indexPath.row].firstName!) \(allContacts[indexPath.row].lastName!)"
-        cell.contactNumber.text = String(allContacts[indexPath.row].contactNumber)
-        cell.emailAddress.text = allContacts[indexPath.row].emailId
-        
-        return cell
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? ContactTableViewCell {
+            //Cell configuration
+            cell.showData(cellData: allContacts[indexPath.row])
+            return cell
+        }
+        return UITableViewCell()
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Contact")
-        let predicate = NSPredicate(format: "firstName = %d", argumentArray: [allContacts[indexPath.row].firstName!])
-        fetchRequest.predicate = predicate
+        if let contactFirstName = allContacts[indexPath.row].firstName {
+            let predicate = NSPredicate(format: "firstName = %d", argumentArray: [contactFirstName])
+            fetchRequest.predicate = predicate
+        }
         
         do {
-            let contacts = try helper.context.fetch(fetchRequest) as! [Contact]
-            selectedContact = contacts.first!
-            performSegue(withIdentifier: "gotoSingleContact", sender: nil)
+            if let contacts = try helper.context.fetch(fetchRequest) as? [Contact], let selectedContact = contacts.first {
+                performSegue(withIdentifier: "gotoSingleContact", sender: selectedContact)
+            }
         } catch {
-            
             print("No contacts found")
         }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
         if segue.identifier == "gotoSingleContact" {
-            
-            let nextVC = segue.destination as! DisplaySingleContactViewController
-            nextVC.selectedContact = selectedContact
+            if let nextVC = segue.destination as? DisplaySingleContactViewController, let selectedContact = sender as? Contact {
+                nextVC.selectedContact = selectedContact
+            }
         }
     }
 
@@ -95,4 +95,9 @@ class ContactTableViewCell: UITableViewCell {
     @IBOutlet weak var contactNumber: UILabel!
     @IBOutlet weak var emailAddress: UILabel!
     
+    func showData(cellData: Contact) {
+        name.text = "\(cellData.firstName ?? "") \(cellData.lastName ?? "")"
+        contactNumber.text = String(cellData.contactNumber)
+        emailAddress.text = cellData.emailId
+    }
 }

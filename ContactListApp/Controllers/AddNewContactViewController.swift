@@ -23,11 +23,14 @@ class AddNewContactViewController: UIViewController {
         
         let helper = CoreDataHelper()
         
-        let newContact = NSEntityDescription.insertNewObject(forEntityName: "Contact", into: helper.context) as! Contact
+        guard let newContact = NSEntityDescription.insertNewObject(
+            forEntityName: "Contact",
+            into: helper.context) as? Contact else { return }
+        
         newContact.firstName = firstNameTF.text
         newContact.lastName = lastNameTF.text
         newContact.emailId = emailTF.text
-        newContact.contactNumber = Int64(contactTF.text!)!
+        newContact.contactNumber = Int64(contactTF.text ?? "0") ?? 0
         
         do {
             try helper.context.save()
@@ -55,7 +58,6 @@ class AddNewContactViewController: UIViewController {
 extension AddNewContactViewController: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        
         keyboardWillHideField(height: negativeHeight)
         negativeHeight = 0
         textField.resignFirstResponder()
@@ -63,18 +65,14 @@ extension AddNewContactViewController: UITextFieldDelegate {
     }
     
     func keyboardWillShowField(height: CGFloat) {
-        
         if self.view.tag == 0 {
-            
             self.view.frame.origin.y -= height
             self.view.tag = 1
         }
     }
     
     func keyboardWillHideField(height: CGFloat) {
-        
         if self.view.tag == 1 {
-            
             self.view.frame.origin.y += height
             self.view.tag = 0
         }
